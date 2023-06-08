@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.jeremias.server.app.models.dao.ICategoriaDao;
 import com.jeremias.server.app.models.dao.IPreguntaDao;
@@ -23,6 +24,7 @@ import com.jeremias.server.app.models.entity.Pregunta;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = { "https://ambitious-wheel-production.up.railway.app" })
 public class AppRestController {
 
 	@Autowired
