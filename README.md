@@ -9,23 +9,23 @@ Es un proyecto de practica sobre preguntas y respuestas.
 
 - Pagina de Inicio 
 
-![Pagina de inicio](https://res.cloudinary.com/drifqbdtu/image/upload/v1686345722/Readme/Preguntas/inicioPreguntas_zilogg.png)
+![Pagina de inicio](https://res.cloudinary.com/drifqbdtu/image/upload/w_690/v1686345722/Readme/Preguntas/inicioPreguntas_zilogg.png)
 
 - Pregunta
 
-![Pregunta](https://res.cloudinary.com/drifqbdtu/image/upload/v1686345722/Readme/Preguntas/preguntaPreguntas_bixsym.png)
+![Pregunta](https://res.cloudinary.com/drifqbdtu/image/upload/w_690/v1686345722/Readme/Preguntas/preguntaPreguntas_bixsym.png)
 
 - Pagina de Categorias
 
-![Pagina de Categorias](https://res.cloudinary.com/drifqbdtu/image/upload/v1686345722/Readme/Preguntas/categoriasPreguntas_a2ucvd.png)
+![Pagina de Categorias](https://res.cloudinary.com/drifqbdtu/image/upload/w_690/v1686345722/Readme/Preguntas/categoriasPreguntas_a2ucvd.png)
 
 - Lista de preguntas personalizadas
 
-![Lista de preguntas personalizadas](https://res.cloudinary.com/drifqbdtu/image/upload/v1686345722/Readme/Preguntas/ListaPReguntas_ptiom4.png)
+![Lista de preguntas personalizadas](https://res.cloudinary.com/drifqbdtu/image/upload/w_690/v1686345722/Readme/Preguntas/ListaPReguntas_ptiom4.png)
 
 - Formulario de preguntas personalizadas
 
-![Formulario de preguntas personalizadas](https://res.cloudinary.com/drifqbdtu/image/upload/v1686345722/Readme/Preguntas/FormPreguntas_ktuflc.png)
+![Formulario de preguntas personalizadas](https://res.cloudinary.com/drifqbdtu/image/upload/w_690/v1686345722/Readme/Preguntas/FormPreguntas_ktuflc.png)
 
 ## Variables de entorno
 
