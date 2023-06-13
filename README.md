@@ -1,5 +1,5 @@
 
-# Preguntas App
+# Syl
 
 Es un proyecto de practica sobre preguntas y respuestas.
 
