@@ -24,7 +24,6 @@ const GamePage = ({ mode }: GamePageProps) => {
     error,
     victoria,
     continuar,
-    startTimer,
   } = UsePreguntasHook(mode)
 
   return (
@@ -37,7 +36,6 @@ const GamePage = ({ mode }: GamePageProps) => {
         />
       ) : (
         <JuegoComponent
-          startTimer={startTimer}
           final={final}
           opcionElegida={opcionElegida}
           preg={preg}

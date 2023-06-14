@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FormPreguntaValues, Pregunta, CustomPregs } from '../types/types'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 type DiccionarioValores = '1' | '2' | '3' | '4'
 
@@ -9,6 +9,34 @@ const UsePreguntasCustomHook = () => {
   const [vidas, setVidas] = useState<number>(0)
   const [tiempo, setTiempo] = useState<number>(0)
   const navigator = useNavigate()
+  const { customid } = useParams()
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    if (pathname.split('/')[1] === 'custom') {
+      if (customid === 'sin-guardar') {
+        const preguntasL = localStorage.getItem('customPreguntas')
+        if (preguntasL !== null) {
+          const parsePreguntasL: {
+            preguntas: Array<Pregunta>
+          } = JSON.parse(preguntasL)
+          if (parsePreguntasL.preguntas.length === 0) {
+            navigator('/custom-list')
+          }
+        }
+        return
+      }
+
+      if (customid) {
+        const lista = getCustomList(Number(customid))
+        if (lista) {
+          localStorage.setItem('customPreguntas', JSON.stringify(lista?.data))
+        } else {
+          navigator('/custom-list')
+        }
+      }
+    }
+  }, [])
 
   const crearPregunta = ({
     encabezado,
@@ -61,14 +89,15 @@ const UsePreguntasCustomHook = () => {
   }
 
   const getPreguntaCustom = (
-    reiniciar?: boolean
+    reiniciar?: boolean,
+    continuar?: boolean
   ): {
     pregunta: Pregunta
     tiempo: number
     vidas: number
     cantidad: number
   } => {
-    if (reiniciar) {
+    if (reiniciar || continuar) {
       localStorage.setItem(
         'customPreguntas',
         JSON.stringify({ preguntas: customPreguntas, tiempo, vidas })
@@ -85,22 +114,6 @@ const UsePreguntasCustomHook = () => {
         setPreguntas(custom.preguntas)
         setVidas(custom.vidas)
         setTiempo(custom.tiempo)
-      }
-      if (custom.preguntas.length === 0) {
-        localStorage.setItem(
-          'customPreguntas',
-          JSON.stringify({
-            preguntas: customPreguntas,
-            vidas: custom.vidas,
-            tiempo: custom.tiempo,
-          })
-        )
-        return {
-          pregunta: { encabezado: '', id: -1, respuesta: '', valores: '' },
-          tiempo: custom.tiempo,
-          vidas: custom.vidas,
-          cantidad: 0,
-        }
       }
       const valorInicial = custom.preguntas.length
       const valorRandom = Math.floor(Math.random() * valorInicial)
@@ -141,7 +154,7 @@ const UsePreguntasCustomHook = () => {
     const custom = {
       preguntas: customPreguntas,
       vidas,
-      tiempo,
+      tiempo: tiempo === 0 ? -33 : tiempo,
     }
 
     if (customPreguntas.length !== 0) {
@@ -163,7 +176,21 @@ const UsePreguntasCustomHook = () => {
       localStorage.setItem('customList', JSON.stringify(customList))
     }
     localStorage.setItem('customPreguntas', JSON.stringify(custom))
-    navigator('/custom')
+
+    if (!guardar) {
+      navigator(`/custom/sin-guardar`)
+      return
+    }
+
+    if (id !== undefined) {
+      navigator(`/custom/${id}`)
+      return
+    }
+
+    if (guardar && id === undefined) {
+      navigator(`/custom/${getCustomLists().length - 1}`)
+      return
+    }
   }
 
   const deleteListElement = (id: number) => {

@@ -15,43 +15,56 @@ const CustomListPage = () => {
   const navigate = useNavigate()
 
   return (
-    <div className='flex items-center justify-center flex-col gap-5'>
-      <h1 className='text-4xl'>Lista de preguntas personalizadas</h1>
+    <div className='flex items-center justify-center flex-col gap-3'>
+      <h1 className='text-4xl font-semibold'>
+        Lista de preguntas personalizadas
+      </h1>
       <Link
         to={'/'}
-        className='border rounded-md p-1'
+        className='rounded-md p-2 text-lg text-center text-white font-bold bg-[#83a65b] cursor-pointer hover:underline'
       >
         Volver
       </Link>
       <Link
         to={'/custom-form'}
-        className='border rounded-md p-2'
+        className='rounded-md p-2 text-lg text-center text-white font-bold bg-[#be4fbb] cursor-pointer hover:underline'
       >
-        Nueva lista
+        Nueva lista +
       </Link>
       {customLists.length === 0 ? (
         <>
-          <h1>Parece que no tienes ninguna lista personalizada...</h1>
-          <h1>Seleccione la opción de guardar en el formulario de creación.</h1>
+          <p className='text-lg'>
+            Parece que no tienes ninguna lista personalizada...
+          </p>
+          <p className='text-lg'>
+            Seleccione la opción de guardar en el formulario de creación.
+          </p>
         </>
       ) : (
         <div className='flex gap-3 flex-wrap'>
           {customLists.map(({ id, nombre, data }) => {
             return (
               <div
-                className='border rounded-md p-2 hover:cursor-pointer'
+                className='border-2 border-[#c59660] rounded-md p-2 hover:cursor-pointer hover:border-[#6d7ab4]'
                 key={id}
                 onClick={() => {
                   localStorage.setItem('customPreguntas', JSON.stringify(data))
-                  navigate('/custom')
+                  navigate(`/custom/${id}`)
                 }}
               >
-                <p>{nombre}</p>
-                <p>Preguntas : {data.preguntas.length}</p>
-                <p>Vidas : {data.vidas}</p>
-                <p>Tiempo : {data.tiempo} segundos</p>
+                <p className='text-lg'>{nombre}</p>
+                <p className='text-lg'>Preguntas : {data.preguntas.length}</p>
+                <p className='text-lg'>
+                  Vidas : {data.vidas === 0 ? 'desactivado' : data.vidas}
+                </p>
+                <p className='text-lg mb-1'>
+                  Tiempo :
+                  {data.tiempo === -33
+                    ? ' desactivado'
+                    : `${data.tiempo} segundos`}
+                </p>
                 <button
-                  className='border rounded-md p-2 mt-2 mr-2 text-sm'
+                  className='rounded-md p-2 text-sm text-center text-white font-bold bg-[#b04237] mr-2 cursor-pointer hover:underline'
                   onClick={(
                     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
                   ) => {
@@ -63,7 +76,7 @@ const CustomListPage = () => {
                   Eliminar
                 </button>
                 <Link
-                  className='border rounded-md p-2 mt-2 text-sm'
+                  className='rounded-md p-2 text-sm text-center text-white font-bold bg-[#6d7ab4] cursor-pointer hover:underline'
                   to={`/custom-form/${id}`}
                   onClick={(
                     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>

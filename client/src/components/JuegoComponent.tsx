@@ -14,7 +14,6 @@ const JuegoComponent = ({
   muted,
   tiempo,
   error,
-  startTimer,
 }: JuegoComponentProps) => {
   const vidasIcon = ['❤️', '❤️', '❤️']
 
@@ -28,8 +27,7 @@ const JuegoComponent = ({
             <h1>Modo de juego {mode}</h1>
             <Link
               to={'/'}
-              className='border rounded-md p-1
-            '
+              className='rounded-md p-1 text-lg text-center text-white font-bold bg-[#be4fbb] cursor-pointer hover:underline'
             >
               Finalizar partida
             </Link>
@@ -44,47 +42,49 @@ const JuegoComponent = ({
           {cargando ? (
             <div>
               <div className='lds-dual-ring'></div>
-              <h1>Cargando...</h1>
+              <h1 className='text-lg'>Cargando...</h1>
             </div>
           ) : (
             <>
               <h1>Pregunta número: {contador} </h1>
-              {tiempo === 0 && mode === 'custom' && startTimer ? null : (
-                <h2>Tiempo: {tiempo}</h2>
+              {mode === 'custom' && tiempo === -33 ? null : (
+                <h2 className='text-lg'>Tiempo: {tiempo}</h2>
               )}
               {mode === 'infinito' || vidas === 0 ? null : (
                 <div className='flex'>
-                  <p>Vidas: </p>
+                  <p className='text-lg'>Vidas: </p>
                   {vidasIcon.slice(0, vidas).map((vida, index) => (
                     <p key={index}>{vida}</p>
                   ))}
                   {vidas > 3 ? vidas : null}
                 </div>
               )}
-              <div className='border rounded-md max-w-[390px] sm:min-w-[500px] sm:max-w-fit'>
-                <h1 className='border rounded-md text-xl p-3'>
-                  {preg.encabezado}
-                </h1>
-                <em>{final.msg}</em>
-                <div className='flex border justify-center items-center rounded-md p-3 gap-3'>
+              <div className='border-2 border-[#6d7ab4] rounded-md max-w-[390px] sm:min-w-[500px] sm:max-w-fit'>
+                <h1 className='text-xl p-3'>{preg.encabezado}</h1>
+                {final.msg ? (
+                  <em className='text-lg border-2 border-[#6d7ab4] border-x-0 border-b-0 block'>
+                    {final.msg}
+                  </em>
+                ) : null}
+                <div className='flex border-2 border-[#6d7ab4] border-x-0 justify-center items-center border-b-0 p-3 gap-3'>
                   <div className='grid grid-rows-2 grid-cols-1 gap-4 sm:grid-flow-col'>
                     {preg.valores.map((valor: string, index: number) => {
                       return (
                         <button
                           key={index}
                           className={
-                            'border rounded-md p-3 min-w-[250px] sm:min-w-[300px] ' +
+                            'border-2 border-[#6d7ab4] rounded-md p-3 min-w-[250px] text-lg sm:min-w-[300px] ' +
                             (final.correctOption === 5 && final.option === index
-                              ? 'bg-green-700'
+                              ? 'bg-[#83a65b] font-bold text-white'
                               : null) +
                             ' ' +
                             (final.correctOption === index &&
                             final.option !== index
-                              ? 'bg-green-700'
+                              ? 'bg-[#83a65b] font-bold text-white'
                               : null) +
                             ' ' +
                             (final.correctOption !== 5 && final.option === index
-                              ? 'bg-red-700'
+                              ? 'bg-red-700 font-bold text-white'
                               : null)
                           }
                           disabled={botones}

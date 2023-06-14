@@ -43,14 +43,17 @@ const CustomFormPage = () => {
   const tiempo = useRef<HTMLInputElement>(null)
   const guardar = useRef<HTMLInputElement>(null)
   const nombreList = useRef<HTMLInputElement>(null)
-  const { id } = useParams()
+  const { listid } = useParams()
   useEffect(() => {
-    if (id) {
-      const customList = getCustomList(Number(id))
+    if (listid) {
+      const customList = getCustomList(Number(listid))
       if (customList !== undefined && tiempo.current && nombreList.current) {
         setPreguntas(customList.data.preguntas)
         setVidas(vidas.slice(0, customList.data.vidas))
-        tiempo.current.value = customList.data.tiempo.toString()
+        tiempo.current.value =
+          customList.data.tiempo === -33
+            ? '0'
+            : customList.data.tiempo.toString()
         nombreList.current.value = customList.nombre
       }
     }
@@ -59,15 +62,15 @@ const CustomFormPage = () => {
 
   return (
     <div className='flex flex-col items-center justify-center gap-1'>
-      <h1 className='text-4xl mb-1 text-center'>Crear juego personalizado</h1>
+      <h1 className='text-4xl font-semibold mb-1'>Crear juego personalizado</h1>
       <Link
         to={'/'}
-        className='border rounded-md my-1 p-1'
+        className='rounded-md p-2 text-lg text-center text-white font-bold bg-[#83a65b] cursor-pointer hover:underline'
       >
         Volver
       </Link>
       <button
-        className='border rounded-md my-1 p-1'
+        className='rounded-md p-1 text-lg text-center text-white font-bold bg-[#be4fbb] cursor-pointer hover:underline my-1'
         onClick={() => {
           setLista(!lista)
         }}
@@ -75,16 +78,16 @@ const CustomFormPage = () => {
         {lista ? 'Ocultar lista de preguntas' : 'Mostrar lista de preguntas'}
       </button>
       {lista && customPreguntas.length >= 1 ? (
-        <div className='flex flex-wrap justify-center flex-col border rounded-md p-1 mb-1 gap-2'>
+        <div className='flex flex-wrap justify-center flex-col border-[#6d7ab4] border-2  rounded-md p-1 mb-1 gap-2'>
           {customPreguntas.map((pregunta) => {
             return (
               <div
-                className='border rounded-md flex p-1 gap-1'
+                className='border-2 border-[#be4fbb] rounded-md flex p-1 gap-1'
                 key={pregunta.id}
               >
-                <h1>{pregunta.encabezado}</h1>
+                <h1 className='text-lg'>{pregunta.encabezado}</h1>
                 <button
-                  className='text-sm ml-auto'
+                  className='text-lg ml-auto'
                   onClick={() => {
                     eliminarPregunta(pregunta.id)
                   }}
@@ -99,15 +102,21 @@ const CustomFormPage = () => {
       <div className='flex items-center justify-center text-center gap-1 mb-2'>
         <div
           className={
-            'flex m-auto border rounded-md p-1 ' +
-            (erroresCustom.tiempo ? 'border-red-600 text-red-600' : null)
+            'flex m-auto border-2 border-[#6d7ab4] rounded-md p-1 ' +
+            (erroresCustom.tiempo ? 'border-[#dc2626] text-red-600' : null)
           }
         >
-          <label htmlFor='tiempo'>Tiempo :</label>
+          <label
+            htmlFor='tiempo'
+            className='text-lg'
+          >
+            Tiempo :
+          </label>
           <input
+            id='tiempo'
             ref={tiempo}
             type='number'
-            className='bg-black text-white w-14 text-center rounded-md outline-none'
+            className='bg-transparent w-14 text-center rounded-md text-lg outline-none'
             defaultValue={20}
             onChange={() => {
               const errorCustomCopy = { ...erroresCustom }
@@ -124,8 +133,8 @@ const CustomFormPage = () => {
             }}
           />
         </div>
-        <div className='flex m-auto border rounded-md p-1'>
-          <label>
+        <div className='flex m-auto border-2 border-[#6d7ab4] rounded-md p-1'>
+          <label className='text-lg'>
             Vidas :
             {vidas.slice(0, 3).map((vidas, index) => (
               <span key={index}> {vidas} </span>
@@ -134,7 +143,7 @@ const CustomFormPage = () => {
           </label>
           <button
             type='button'
-            className='w-5'
+            className='w-5 text-lg'
             onClick={() => {
               const vidasCopy = [...vidas]
               vidasCopy.push('❤️')
@@ -145,7 +154,7 @@ const CustomFormPage = () => {
           </button>
           <button
             type='button'
-            className='w-5'
+            className='w-5 text-lg'
             onClick={() => {
               const vidasCopy = [...vidas]
               vidasCopy.pop()
@@ -167,9 +176,9 @@ const CustomFormPage = () => {
         {({ errors, touched }) => (
           <Form className='flex items-center justify-center flex-col text-center gap-1'>
             <div className='flex justify-center items-center gap-2'>
-              <h1>Guardar? </h1>
+              <h1 className='text-lg'>Guardar? </h1>
               <input
-                className='appearance-none border w-4 h-4 rounded-lg checked:bg-green-400'
+                className='appearance-none border-2 border-[#6d7ab4] w-4 h-4 rounded-lg checked:bg-[#6d7ab4]'
                 type='checkbox'
                 ref={guardar}
                 defaultChecked={true}
@@ -182,9 +191,9 @@ const CustomFormPage = () => {
               {mostrarNombre ? (
                 <input
                   className={
-                    'bg-black text-white border rounded-md outline-none p-1 ' +
+                    'bg-transparent border-2 border-[#6d7ab4] rounded-md outline-none p-1 ' +
                     (erroresCustom.nombre
-                      ? 'border-red-600 placeholder:text-red-600'
+                      ? 'border-[#dc2626] placeholder:text-red-600'
                       : null)
                   }
                   type='text'
@@ -207,26 +216,28 @@ const CustomFormPage = () => {
                 />
               ) : null}
             </div>
-            <p>Coloque 0 en los campos de tiempo o vida para desactivarlos.</p>
-            <p className='text-red-500'>{erroresCustom.cantidad}</p>
-            <div className='border rounded-md max-w-[390px] sm:min-w-[500px] sm:max-w-fit'>
+            <p className='text-lg'>
+              Coloque 0 en los campos de tiempo o vida para desactivarlos.
+            </p>
+            <p className='text-red-600 text-lg'>{erroresCustom.cantidad}</p>
+            <div className='border-2 border-[#6d7ab4] rounded-md max-w-[390px] sm:min-w-[500px] sm:max-w-fit'>
               <Field
                 name='encabezado'
                 placeholder={
                   errors.encabezado && touched.encabezado
                     ? errors.encabezado
-                    : `Ingrese el encabezado de la pregunta numero ${
+                    : `Ingrese el encabezado de la pregunta número ${
                         customPreguntas.length + 1
                       }`
                 }
                 className={
-                  'rounded-md text-xl p-3 bg-black w-full text-center outline-none ' +
+                  'rounded-md text-xl p-3 bg-transparent w-full text-center outline-none ' +
                   (errors.encabezado && touched.encabezado
-                    ? 'border-red-600 placeholder:text-red-600'
+                    ? 'border-[#dc2626] placeholder:text-red-600'
                     : null)
                 }
               />
-              <div className='flex border justify-center items-center rounded-md p-3 gap-3'>
+              <div className='flex border-2 border-[#6d7ab4] border-x-0 justify-center items-center p-3 gap-3'>
                 <div className='grid grid-rows-2 grid-cols-1 gap-4 sm:grid-flow-col'>
                   <div className='flex items-center justify-center gap-1 flex-row-reverse sm:flex-row'>
                     <Field
@@ -234,9 +245,9 @@ const CustomFormPage = () => {
                       name='valorCorrecto'
                       value='1'
                       className={
-                        'appearance-none border w-4 h-4 rounded-lg checked:bg-green-400 ' +
+                        'appearance-none border-2 border-[#6d7ab4] w-4 h-4 rounded-lg checked:bg-[#6d7ab4] ' +
                         (errors.valorCorrecto && touched.valorCorrecto
-                          ? 'border-red-600'
+                          ? 'border-[#dc2626]'
                           : null)
                       }
                     />
@@ -248,9 +259,9 @@ const CustomFormPage = () => {
                           : 'Ingrese el valor de la primera opción'
                       }
                       className={
-                        'border rounded-md p-3 min-w-[250px] sm:min-w-[300px] bg-black outline-none ' +
+                        'border-2 border-[#6d7ab4] rounded-md p-3 min-w-[250px] sm:min-w-[300px] bg-transparent outline-none ' +
                         (errors.valor1 && touched.valor1
-                          ? 'border-red-600 placeholder:text-red-600'
+                          ? 'border-[#dc2626] placeholder:text-red-600'
                           : null)
                       }
                     />
@@ -261,9 +272,9 @@ const CustomFormPage = () => {
                       name='valorCorrecto'
                       value='2'
                       className={
-                        'appearance-none border w-4 h-4 rounded-lg checked:bg-green-400 ' +
+                        'appearance-none border-2 border-[#6d7ab4] w-4 h-4 rounded-lg checked:bg-[#6d7ab4] ' +
                         (errors.valorCorrecto && touched.valorCorrecto
-                          ? 'border-red-600'
+                          ? 'border-[#dc2626]'
                           : null)
                       }
                     />
@@ -275,9 +286,9 @@ const CustomFormPage = () => {
                           : 'Ingrese el valor de la segunda opción'
                       }
                       className={
-                        'border rounded-md p-3 min-w-[250px] sm:min-w-[300px] bg-black outline-none ' +
+                        'border-2 border-[#6d7ab4] rounded-md p-3 min-w-[250px] sm:min-w-[300px] bg-transparent outline-none ' +
                         (errors.valor2 && touched.valor2
-                          ? 'border-red-600 placeholder:text-red-600'
+                          ? 'border-[#dc2626] placeholder:text-red-600'
                           : null)
                       }
                     />
@@ -291,9 +302,9 @@ const CustomFormPage = () => {
                           : 'Ingrese el valor de la tercera opción'
                       }
                       className={
-                        'border rounded-md p-3 min-w-[250px] sm:min-w-[300px] bg-black outline-none ' +
+                        'border-2 border-[#6d7ab4] rounded-md p-3 min-w-[250px] sm:min-w-[300px] bg-transparent outline-none ' +
                         (errors.valor3 && touched.valor3
-                          ? 'border-red-600 placeholder:text-red-600'
+                          ? 'border-[#dc2626] placeholder:text-red-600'
                           : null)
                       }
                     />
@@ -302,9 +313,9 @@ const CustomFormPage = () => {
                       name='valorCorrecto'
                       value='3'
                       className={
-                        'appearance-none border w-4 h-4 rounded-lg checked:bg-green-400 ' +
+                        'appearance-none border-2 border-[#6d7ab4] w-4 h-4 rounded-lg checked:bg-[#6d7ab4] ' +
                         (errors.valorCorrecto && touched.valorCorrecto
-                          ? 'border-red-600'
+                          ? 'border-[#dc2626]'
                           : null)
                       }
                     />
@@ -318,9 +329,9 @@ const CustomFormPage = () => {
                           : 'Ingrese el valor de la cuarta opción'
                       }
                       className={
-                        'border rounded-md p-3 min-w-[250px] sm:min-w-[300px] bg-black outline-none ' +
+                        'border-2 border-[#6d7ab4] rounded-md p-3 min-w-[250px] sm:min-w-[300px] bg-transparent outline-none ' +
                         (errors.valor4 && touched.valor4
-                          ? 'border-red-600 placeholder:text-red-600'
+                          ? 'border-[#dc2626] placeholder:text-red-600'
                           : null)
                       }
                     />
@@ -329,9 +340,9 @@ const CustomFormPage = () => {
                       name='valorCorrecto'
                       value='4'
                       className={
-                        'appearance-none border w-4 h-4 rounded-lg checked:bg-green-400 ' +
+                        'appearance-none border-2 border-[#6d7ab4] w-4 h-4 rounded-lg checked:bg-[#6d7ab4] ' +
                         (errors.valorCorrecto && touched.valorCorrecto
-                          ? 'border-red-600'
+                          ? 'border-[#dc2626]'
                           : null)
                       }
                     />
@@ -339,15 +350,20 @@ const CustomFormPage = () => {
                 </div>
               </div>
               {errors.valorCorrecto && touched.valorCorrecto ? (
-                <p>{errors.valorCorrecto}</p>
+                <p className='text-lg text-red-600'>{errors.valorCorrecto}</p>
               ) : null}
-              <button type='submit'>Añadir</button>
+              <button
+                type='submit'
+                className='text-lg font-bold bg-[#be4fbb] text-white p-1 rounded-md my-1'
+              >
+                Añadir +
+              </button>
             </div>
           </Form>
         )}
       </Formik>
       <button
-        className='border rounded-md p-1 mt-1'
+        className='rounded-md p-1 text-lg text-center text-white font-bold bg-[#c59660] cursor-pointer hover:underline mt-1'
         onClick={() => {
           const errorCustomCopy = { ...erroresCustom }
           if (customPreguntas.length === 0) {
@@ -371,7 +387,7 @@ const CustomFormPage = () => {
             Number(tiempo.current?.value) ?? 20,
             guardar.current?.checked ?? true,
             nombreList.current?.value ?? '',
-            id ? Number(id) : undefined
+            listid ? Number(listid) : undefined
           )
         }}
       >

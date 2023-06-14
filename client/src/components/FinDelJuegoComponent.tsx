@@ -10,38 +10,40 @@ const FinDelJuegoComponent = ({
     <>
       {victoria ? (
         <div className='flex items-center justify-center flex-col gap-3'>
-          <h1 className='text-3xl'>Respondiste todas las preguntas!</h1>
+          <h1 className='text-4xl font-semibold'>
+            Respondiste todas las preguntas!
+          </h1>
           <button
             onClick={continuar}
-            className='text-xl border p-3 rounded-md'
+            className='rounded-md p-2 text-2xl text-center text-white font-bold bg-[#c59660] cursor-pointer hover:underline'
           >
             Continuar (Se repetiran las preguntas)
           </button>
           <button
             onClick={reiniciar}
-            className='text-xl border p-3 rounded-md'
+            className='rounded-md p-2 text-2xl text-center text-white font-bold bg-[#6d7ab4] cursor-pointer hover:underline'
           >
             Reiniciar
           </button>
           <Link
             to={'/'}
-            className='text-xl border p-3 rounded-md'
+            className='rounded-md p-2 text-2xl text-center text-white font-bold bg-[#83a65b] cursor-pointer hover:underline'
           >
             Volver
           </Link>
         </div>
       ) : (
         <div className='flex items-center justify-center flex-col gap-3'>
-          <h1 className='text-3xl'>Fin del juego</h1>
+          <h1 className='text-4xl font-semibold'>Fin del juego</h1>
           <button
             onClick={reiniciar}
-            className='text-xl border p-3 rounded-md'
+            className='rounded-md p-2 text-2xl text-center text-white font-bold bg-[#6d7ab4] cursor-pointer hover:underline'
           >
             Reintentar
           </button>
           <Link
             to={'/'}
-            className='text-xl border p-3 rounded-md'
+            className='rounded-md p-2 text-2xl text-center text-white font-bold bg-[#83a65b] cursor-pointer hover:underline'
           >
             Volver
           </Link>

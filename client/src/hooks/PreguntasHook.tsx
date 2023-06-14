@@ -67,13 +67,13 @@ const UsePreguntasHook = (mode: Mode) => {
 
   const { categoriaId } = useParams()
 
-  const getCPregunta = (reiniciar?: boolean): number => {
+  const getCPregunta = (reiniciar?: boolean, continuar?: boolean): number => {
     setStartTimer(false)
     let contadorCopy = contador
     if (reiniciar) {
       contadorCopy = 0
     }
-    const customPreg = getPreguntaCustom(reiniciar)
+    const customPreg = getPreguntaCustom(reiniciar, continuar)
 
     const fakeIds: Array<number> = []
     fakeIds.length = customPreg.cantidad
@@ -134,7 +134,7 @@ const UsePreguntasHook = (mode: Mode) => {
     setBotones(false)
     setCargando(false)
     setTiempo(cTiempo)
-    if (cTiempo !== 0) {
+    if (cTiempo >= 0) {
       setStartTimer(true)
     }
   }
@@ -253,6 +253,12 @@ const UsePreguntasHook = (mode: Mode) => {
     setRacha(0)
     const audio = new Audio('/sounds/incorrecto.mp3')
     audio.volume = 0.2
+
+    if (ids.length === 1) {
+      victoriaF()
+      return
+    }
+
     if (vidas > 1 && !muted) {
       audio.play()
     }
@@ -260,12 +266,8 @@ const UsePreguntasHook = (mode: Mode) => {
       (element: string) => element === preg.respuesta
     )
 
-    if (ids.length === 1) {
-      victoriaF()
-      return
-    }
-
     if (mode === 'custom' && vidas === 0) {
+      audio.play()
       setFinal({
         msg: `Incorrecto la respuesta es "${preg.respuesta}"`,
         correctOption,
@@ -333,7 +335,7 @@ const UsePreguntasHook = (mode: Mode) => {
   const continuar = () => {
     setVictoria(false)
     if (mode === 'custom') {
-      getCPregunta()
+      getCPregunta(undefined, true)
       return
     }
     getPregunta()
@@ -377,7 +379,6 @@ const UsePreguntasHook = (mode: Mode) => {
     error,
     victoria,
     continuar,
-    startTimer,
   }
 }
 

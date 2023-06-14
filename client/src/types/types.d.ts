@@ -46,7 +46,6 @@ export interface JuegoComponentProps {
   cambiarAudio: () => void
   tiempo: number
   error: boolean
-  startTimer: boolean
 }
 
 export interface FinDelJuegoProps {

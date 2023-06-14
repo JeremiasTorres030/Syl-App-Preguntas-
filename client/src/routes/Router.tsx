@@ -11,11 +11,12 @@ const Router = () => {
     { path: '/normal', element: <GamePage mode='normal' /> },
     { path: '/infinito', element: <GamePage mode='infinito' /> },
     { path: '/custom', element: <GamePage mode='custom' /> },
+    { path: '/custom/:customid', element: <GamePage mode='custom' /> },
     { path: '/categoria/:categoriaId', element: <GamePage mode='categoria' /> },
     { path: '/categorias', element: <CategoriesPage /> },
     { path: '/custom-list', element: <CustomListPage /> },
     { path: '/custom-form/', element: <CustomFormPage /> },
-    { path: '/custom-form/:id', element: <CustomFormPage /> },
+    { path: '/custom-form/:listid', element: <CustomFormPage /> },
 
     {
       path: '*',
