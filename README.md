@@ -7,17 +7,17 @@ Es un proyecto de practica sobre preguntas y respuestas.
 
 ## Imagenes
 
-- Pagina de Inicio 
+- Pagina de Inicio
 
-![Pagina de inicio](https://res.cloudinary.com/drifqbdtu/image/upload/w_690/v1686345722/Readme/Preguntas/inicioPreguntas_zilogg.png)
+![Pagina de inicio](https://res.cloudinary.com/drifqbdtu/image/upload/w_690/v1686345722/Readme/Preguntas/inicioPreguntas_jg8trm.png)
 
 - Pregunta
 
-![Pregunta](https://res.cloudinary.com/drifqbdtu/image/upload/w_690/v1686345722/Readme/Preguntas/preguntaPreguntas_bixsym.png)
+![Pregunta](https://res.cloudinary.com/drifqbdtu/image/upload/w_690/v1686345722/Readme/Preguntas/preguntaPreguntas_ktmzrr.png)
 
 - Pagina de Categorias
 
-![Pagina de Categorias](https://res.cloudinary.com/drifqbdtu/image/upload/w_690/v1686345722/Readme/Preguntas/categoriasPreguntas_a2ucvd.png)
+![Pagina de Categorias](https://res.cloudinary.com/drifqbdtu/image/upload/w_690/v1686345722/Readme/Preguntas/categoriasPreguntas_xdrhjg.png)
 
 - Lista de preguntas personalizadas
 
@@ -25,7 +25,7 @@ Es un proyecto de practica sobre preguntas y respuestas.
 
 - Formulario de preguntas personalizadas
 
-![Formulario de preguntas personalizadas](https://res.cloudinary.com/drifqbdtu/image/upload/w_690/v1686345722/Readme/Preguntas/FormPreguntas_ktuflc.png)
+![Formulario de preguntas personalizadas](https://res.cloudinary.com/drifqbdtu/image/upload/w_690/v1686345722/Readme/Preguntas/FormPreguntas_hynk8q.png)
 
 ## Variables de entorno
 
