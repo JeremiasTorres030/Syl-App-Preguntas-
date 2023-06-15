@@ -21,7 +21,7 @@ Es un proyecto de practica sobre preguntas y respuestas.
 
 - Lista de preguntas personalizadas
 
-![Lista de preguntas personalizadas](https://res.cloudinary.com/drifqbdtu/image/upload/w_690/v1686345722/Readme/Preguntas/ListaPReguntas_ptiom4.png)
+![Lista de preguntas personalizadas](https://res.cloudinary.com/drifqbdtu/image/upload/w_690/v1686345722/Readme/Preguntas/ListaPReguntas_tfk1kj.png)
 
 - Formulario de preguntas personalizadas
 
