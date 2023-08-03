@@ -24,7 +24,7 @@ import com.jeremias.server.app.models.entity.Pregunta;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = { "https://syl-production.up.railway.app" })
+@CrossOrigin(origins = { "https://syl.onrender.com" })
 public class AppRestController {
 
 	@Autowired
